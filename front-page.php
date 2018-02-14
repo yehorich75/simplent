@@ -73,34 +73,39 @@
           <div class="block">
             <h3 class="h3">Recent Works</h3>
             <div class="works">
-              <a href="#" class="work">
-                <div class="work__image"><img src="img/work.jpg" alt=""></div>
-                <div class="work__bottom">
-                  <div class="work__title">Character Design</div>
-                  <div class="work__date">June 15, 2012</div>
-                </div>
-              </a>
-              <a href="#" class="work">
-                <div class="work__image"><img src="img/work.jpg" alt=""></div>
-                <div class="work__bottom">
-                  <div class="work__title">Character Design</div>
-                  <div class="work__date">August 24, 2015</div>
-                </div>
-              </a>
-              <a href="#" class="work">
-                <div class="work__image"><img src="img/work.jpg" alt=""></div>
-                <div class="work__bottom">
-                  <div class="work__title">Character Design</div>
-                  <div class="work__date">August 24, 2015</div>
-                </div>
-              </a>
-              <a href="#" class="work">
-                <div class="work__image"><img src="img/work.jpg" alt=""></div>
-                <div class="work__bottom">
-                  <div class="work__title">Character Design</div>
-                  <div class="work__date">August 24, 2015</div>
-                </div>
-              </a>
+
+              <?php
+
+              $args = array(
+                'post_type' => 'portfolio'
+              );
+
+              $my_query = new WP_Query( $args);
+
+              if  ( $my_query->have_posts() ) {
+                while ( $my_query->have_posts() ) {
+                  $my_query->the_post();
+                    $bla = get_field('portfolio_image');
+
+                  
+                  ?>
+
+                  <a href="<?php the_permalink(); ?>" class="work">
+                    <div class="work__image"><img src="<?php echo $bla[sizes][medium]; ?>" alt=""></div>
+                    <div class="work__bottom">
+                      <div class="work__title"><?php the_title(); ?></div>
+                      <div class="work__date"><?php echo get_the_date(); ?></div>
+                    </div>
+                  </a>
+
+                  <?php
+                }
+              }
+              wp_reset_postdata();
+
+              ?>
+
+
             </div>
           </div>
         </div>
